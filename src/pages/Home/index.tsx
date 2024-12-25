@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button"
 import { maskAddress } from "@/lib/address"
 
 export default function HomePage() {
-    const { user } = usePrivy()
+    const { user, logout } = usePrivy()
     const walletClient = useWalletClient()
     const [agwClient, setAgwClient] = useState<AbstractClient | undefined>(undefined)
     const [hashes, setHashes] = useState<string[]>([])
@@ -62,7 +62,8 @@ export default function HomePage() {
     }
 
     useEffect(() => {
-        if (!walletClient.data) {
+        if (!walletClient.data || !user) {
+            setAgwClient(undefined)
             return
         }
 
@@ -84,13 +85,19 @@ export default function HomePage() {
         }
 
         run()
-    }, [walletClient.data])
+    }, [user, walletClient.data])
 
     return (
         <Layout className="flex flex-col p-4 gap-4">
             <div className="my-4 flex justify-center items-center">
                 <span className="text-xl font-semibold">Test Privy + Abstract Global Wallet</span>
             </div>
+
+            {user && (
+                <div>
+                    <Button onClick={logout}>Logout</Button>
+                </div>
+            )}
 
             <div className="w-full flex flex-col gap-1 overflow-hidden max-h-[480px]">
                 <span className="text-sm font-semibold text-secondary">User</span>
