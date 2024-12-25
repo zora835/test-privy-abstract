@@ -1,4 +1,6 @@
 import { AbstractClient, createAbstractClient } from "@abstract-foundation/agw-client"
+import ReactJsonView from "@microlink/react-json-view"
+import { usePrivy } from "@privy-io/react-auth"
 import { CheckIcon, CopyIcon, ExternalLink } from "lucide-react"
 import { useEffect, useState } from "react"
 import { encodeFunctionData, parseAbi } from "viem"
@@ -11,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import { maskAddress } from "@/lib/address"
 
 export default function HomePage() {
+    const { user } = usePrivy()
     const walletClient = useWalletClient()
     const [agwClient, setAgwClient] = useState<AbstractClient | undefined>(undefined)
     const [hashes, setHashes] = useState<string[]>([])
@@ -87,6 +90,20 @@ export default function HomePage() {
         <Layout className="flex flex-col p-4 gap-4">
             <div className="my-4 flex justify-center items-center">
                 <span className="text-xl font-semibold">Test Privy + Abstract Global Wallet</span>
+            </div>
+
+            <div className="w-full flex flex-col gap-1 overflow-hidden max-h-[480px]">
+                <span className="text-sm font-semibold text-secondary">User</span>
+                <ReactJsonView
+                    src={user ? { user } : {}}
+                    theme="summerfruit"
+                    style={{
+                        overflow: "scroll",
+                    }}
+                    displayDataTypes={false}
+                    displayArrayKey={false}
+                    displayObjectSize={false}
+                />
             </div>
 
             <div className="w-full flex flex-col gap-1">

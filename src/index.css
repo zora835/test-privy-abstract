@@ -68,16 +68,12 @@
 }
 
 @layer components {
-    html {
-        @apply overflow-hidden overscroll-none;
-    }
-
     body {
-        @apply bg-black text-foreground w-[100dvw] max-h-[100dvh] min-h-[100dvh] flex justify-center font-uncut overflow-hidden overscroll-none;
+        @apply bg-black text-foreground w-[100dvw] min-h-[100dvh] flex justify-center font-uncut;
     }
 
     #root {
-        @apply w-full max-w-[540px] h-full flex min-h-[100dvh] max-h-[100dvh] overflow-hidden border-l border-r;
+        @apply w-full max-w-[540px] h-full flex min-h-[100dvh] border-l border-r;
         border-left-width: var(--container-border-width);
         border-right-width: var(--container-border-width);
     }
